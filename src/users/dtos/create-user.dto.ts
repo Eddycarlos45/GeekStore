@@ -1,12 +1,23 @@
+import { Type } from 'class-transformer';
+import { IsEmail, IsNotEmpty, IsNotEmptyObject, IsString, ValidateNested } from 'class-validator';
+import { AddressDTO } from './address.dto';
 export class CreateUserDTO {
-    name: string;
-    email: string;
-    password: string;
-    address: IAddress;
-}
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
-export interface IAddress {
-    street: string
-    number: string
-    neighborhood: string
+  @IsString()
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+
+  @IsNotEmpty()
+  @Type(() => AddressDTO)
+  @IsNotEmptyObject()
+  @ValidateNested()
+  address: AddressDTO;
 }
