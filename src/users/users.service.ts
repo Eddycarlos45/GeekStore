@@ -15,17 +15,11 @@ export class UsersService {
     return await userCreated.save();
   }
 
-  async login(email: string, password: string): Promise<Object> {
-    const userExists = await this.userModel.findOne({ email }).exec();
-
-    if (!userExists || userExists.password !== password) {
-      throw new BadRequestException(`Usuário ou senha incorretos`);
+  async findOne(email: string): Promise<IUser> {
+    try {
+      return await this.userModel.findOne({ email }).exec();
+    } catch (error) {
+      return error;
     }
-
-    const token = jwt.sign({ id: userExists.id }, process.env.JWT_SECRET, {
-      expiresIn: 864000,
-    });
-
-    return { token: token };
   }
 }

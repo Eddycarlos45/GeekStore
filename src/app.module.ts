@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductsModule } from './products/products.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    UsersModule,
     MongooseModule.forRoot('mongodb://localhost/geekStore', {
       useNewUrlParser: true,
       useCreateIndex: true,
@@ -13,6 +12,7 @@ import { ProductsModule } from './products/products.module';
       useFindAndModify: false,
     }),
     ProductsModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
